@@ -7,6 +7,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
+        <title>Cartãozinho</title>
         <link rel="icon" type="image/png" href="/icon-front.png"></link>
       </Head>
       <Carousel>
