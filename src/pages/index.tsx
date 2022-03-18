@@ -1,11 +1,12 @@
 import type { NextPage } from "next";
+import { Box } from "@chakra-ui/react";
 import Card from "../components/Card";
 import Carousel from "../components/Carousel";
 import Head from "next/head";
 
 const Home: NextPage = () => {
   return (
-    <div>
+    <Box>
       <Head>
         <title>Cartãozinho</title>
         <link rel="icon" type="image/png" href="/icon-front.png"></link>
@@ -25,7 +26,7 @@ const Home: NextPage = () => {
           cardBrand="Pic-Pay"
         ></Card>
       </Carousel>
-    </div>
+    </Box>
   );
 };
 

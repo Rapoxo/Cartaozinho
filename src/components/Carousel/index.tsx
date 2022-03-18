@@ -1,5 +1,5 @@
-import { ChevronLeftIcon, ChevronRightIcon} from "@chakra-ui/icons";
-import { Box, SlideFade, Text } from "@chakra-ui/react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { Box, SlideFade, Text, Flex } from "@chakra-ui/react";
 
 import type { NextPage } from "next";
 import { ReactNode, useEffect, useState } from "react";
@@ -41,12 +41,7 @@ const Carousel: NextPage<CarouselProps> = ({ children }) => {
     }
   }, [itemIndex, children]);
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <Flex direction={"column"}>
       <Box style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
         <ChevronLeftIcon onClick={handlePrevious} _hover={isDisabledLeft ? { cursor: "auto" } : { cursor: "pointer" }} w={8} h={8} color={isDisabledLeft ? "GrayText" : "black"} />
         <Box as="span" m={8} p={0} onClick={showDetails}>
@@ -75,7 +70,7 @@ const Carousel: NextPage<CarouselProps> = ({ children }) => {
           <Text fontSize="3xl">Total: PRA CARALHO, TÁ?</Text>
         </Box>
       </SlideFade>
-    </div>
+    </Flex>
   );
 };
 
