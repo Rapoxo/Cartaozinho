@@ -1,64 +1,146 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Box, SlideFade, Text, Flex } from "@chakra-ui/react";
-
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import type { CardDetails } from "../types";
 import type { NextPage } from "next";
-import { ReactNode, useEffect, useState } from "react";
 import Circle from "../Circle";
+import Card from "../Card";
 
 type CarouselProps = {
-  children: ReactNode[];
+  cards: CardDetails[];
 };
 
-const Carousel: NextPage<CarouselProps> = ({ children }) => {
+const variants = {
+  enter: (direction: number) => {
+    return {
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    };
+  },
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => {
+    return {
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    };
+  },
+};
+const swipeConfidenceThreshold = 10000;
+
+const swipePower = (offset: number, velocity: number) => {
+  return Math.abs(offset) * velocity;
+};
+
+const Carousel: NextPage<CarouselProps> = ({ cards }) => {
   const [isDisabledLeft, setDisabledLeft] = useState(true);
   const [isDisabledRight, setDisabledRight] = useState(false);
-  const [itemIndex, setItemIndex] = useState(0);
-  const [currentItem, setCurrentItem] = useState(children[itemIndex]);
+  const [[page, direction], setPage] = useState([0, 0]);
+
   const [hiddenDots, setHiddenDots] = useState(false);
-  const handleNext = () => {
-    if (isDisabledRight) return;
-    setItemIndex(itemIndex + 1);
+
+  const paginate = (newDirection: number) => {
+    console.log(newDirection);
+    if (newDirection === 1 && isDisabledRight) return;
+    if (newDirection === -1 && isDisabledLeft) return;
+    if (page + newDirection > cards.length - 1) return;
+    setPage([page + newDirection, newDirection]);
   };
-  const handlePrevious = () => {
-    if (isDisabledLeft) return;
-    setItemIndex(itemIndex - 1);
+
+  const specificPage = (page: number, newDirection: number) => {
+    if (newDirection === 1 && isDisabledRight) return;
+    if (newDirection === -1 && isDisabledLeft) return;
+    setPage([page, newDirection]);
   };
 
   const showDetails = () => {
     setHiddenDots(!hiddenDots);
   };
+
   useEffect(() => {
-    setCurrentItem(children[itemIndex]);
-    if (itemIndex === children.length - 1) {
+    console.log(page);
+    if (page === cards.length - 1) {
       setDisabledRight(true);
     } else {
       setDisabledRight(false);
     }
-    if (itemIndex === 0) {
+    if (page === 0) {
       setDisabledLeft(true);
     } else {
       setDisabledLeft(false);
     }
-  }, [itemIndex, children]);
+  }, [page, cards]);
+
   return (
-    <Flex direction={"column"}>
+    <Flex overflowX="hidden" direction={"column"}>
       <Box style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-        <ChevronLeftIcon onClick={handlePrevious} _hover={isDisabledLeft ? { cursor: "auto" } : { cursor: "pointer" }} w={8} h={8} color={isDisabledLeft ? "GrayText" : "black"} />
+        <ChevronLeftIcon
+          onClick={() => {
+            paginate(-1);
+          }}
+          _hover={isDisabledLeft ? { cursor: "auto" } : { cursor: "pointer" }}
+          w={8}
+          h={8}
+          color={isDisabledLeft ? "GrayText" : "black"}
+        />
         <Box as="span" m={8} p={0} onClick={showDetails}>
-          {currentItem}
+          <AnimatePresence exitBeforeEnter initial={false} custom={direction}>
+            {
+              <motion.div
+                key={cards[page].cardBrand}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "spring", duration: 0.2 },
+                  opacity: { duration: 0.2 },
+                }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={1}
+                onDragEnd={(e, { offset, velocity }) => {
+                  const swipe = swipePower(offset.x, velocity.x);
+
+                  if (swipe < -swipeConfidenceThreshold) {
+                    paginate(1);
+                  } else if (swipe > swipeConfidenceThreshold) {
+                    paginate(-1);
+                  }
+                }}
+              >
+                <Card {...cards[page]} />
+              </motion.div>
+            }
+          </AnimatePresence>
         </Box>
-        <ChevronRightIcon onClick={handleNext} _hover={isDisabledRight ? { cursor: "auto" } : { cursor: "pointer" }} w={8} h={8} color={isDisabledRight ? "GrayText" : "black"} />
+        <ChevronRightIcon
+          onClick={() => {
+            paginate(1);
+          }}
+          _hover={isDisabledRight ? { cursor: "auto" } : { cursor: "pointer" }}
+          w={8}
+          h={8}
+          color={isDisabledRight ? "GrayText" : "black"}
+        />
       </Box>
       <SlideFade in={!hiddenDots} offsetY="-20px">
         <Box display={"flex"} style={{ justifyContent: "center", alignContent: "center" }}>
-          {children.map(child => {
-            const childIndex = children.indexOf(child);
+          {cards.map(child => {
+            const childIndex = cards.indexOf(child);
             return (
               <Circle
-                isActive={itemIndex === childIndex}
+                isActive={page === childIndex}
                 key={childIndex}
                 onClick={() => {
-                  setItemIndex(childIndex);
+                  const direction = childIndex > page ? 1 : -1;
+                  specificPage(childIndex, direction);
                 }}
               />
             );
@@ -67,7 +149,7 @@ const Carousel: NextPage<CarouselProps> = ({ children }) => {
       </SlideFade>
       <SlideFade in={hiddenDots} offsetY="20px">
         <Box display={"flex"} style={{ justifyContent: "center", alignContent: "center" }}>
-          <Text fontSize="3xl">Total: PRA CARALHO, TÁ?</Text>
+          <Text fontSize="3xl">Total: R$ 2,00</Text>
         </Box>
       </SlideFade>
     </Flex>
