@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
-import Card from "../../components/Card";
-import Carousel from "../../components/Carousel";
+import Card from "../components/Card";
+import Carousel from "../components/Carousel";
 import Head from "next/head";
 
 const Home: NextPage = () => {
