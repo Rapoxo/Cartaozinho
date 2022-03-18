@@ -54,7 +54,7 @@ const Carousel: NextPage<CarouselProps> = ({ children }) => {
         </Box>
         <ChevronRightIcon onClick={handleNext} _hover={isDisabledRight ? { cursor: "auto" } : { cursor: "pointer" }} w={8} h={8} color={isDisabledRight ? "GrayText" : "black"} />
       </Box>
-      <SlideFade in={hiddenDots} offsetY="-20px">
+      <SlideFade in={!hiddenDots} offsetY="-20px">
         <Box display={"flex"} style={{ justifyContent: "center", alignContent: "center" }}>
           {children.map(child => {
             const childIndex = children.indexOf(child);
@@ -70,7 +70,7 @@ const Carousel: NextPage<CarouselProps> = ({ children }) => {
           })}
         </Box>
       </SlideFade>
-      <SlideFade in={!hiddenDots} offsetY="20px">
+      <SlideFade in={hiddenDots} offsetY="20px">
         <Box display={"flex"} style={{ justifyContent: "center", alignContent: "center" }}>
           <Text fontSize="3xl">Total: PRA CARALHO, TÁ?</Text>
         </Box>

@@ -1,19 +1,10 @@
 import { Box, Tooltip, Text, SimpleGrid } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import type { CardDetails } from "../types";
 
 const getShadeColor = (color: string) => {
   const rgb = [color.substring(1, 3), color.substring(3, 5), color.substring(5, 7)];
   return `rgb(${rgb.map(c => parseInt(c, 16) * 0.5).join()})`;
-};
-
-type CardDetails = {
-  textColor?: string;
-  secondaryTextColor?: string;
-  backgroundColor: string;
-  cardHolder: string;
-  finalNumbers: string;
-  expiration: string;
-  cardBrand: string;
 };
 
 const Card: NextPage<CardDetails> = ({ textColor, secondaryTextColor, backgroundColor, cardHolder, finalNumbers, expiration, cardBrand }) => {
