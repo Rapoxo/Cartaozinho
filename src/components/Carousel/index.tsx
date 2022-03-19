@@ -107,7 +107,7 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
                 exit="exit"
                 transition={{
                   x: { type: "spring", duration: 0.2 },
-                  opacity: { duration: 0.2 },
+                  opacity: { duration: 0.1 },
                 }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}

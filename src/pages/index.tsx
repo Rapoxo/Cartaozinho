@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import { Box, Flex } from "@chakra-ui/react";
-import Card from "../components/Card";
 import Carousel from "../components/Carousel";
 import Head from "next/head";
 import type { CardDetails } from "../components/types";
