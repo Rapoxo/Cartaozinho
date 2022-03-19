@@ -77,7 +77,7 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
   }, [page, cards]);
 
   return (
-    <Flex overflowX="hidden" direction={"column"}>
+    <Flex overflow="hidden" direction={"column"}>
       <Box style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
         <ChevronLeftIcon
           onClick={() => {
