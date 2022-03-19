@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Card from "../components/Card";
 import Carousel from "../components/Carousel";
 import Head from "next/head";
@@ -35,13 +35,15 @@ const cards: CardDetails[] = [
 
 const Home: NextPage = () => {
   return (
-    <Box>
+    <Flex alignItems="center" justifyContent="center" >
       <Head>
         <title>Cartãozinho</title>
         <link rel="icon" type="image/png" href="/icon-front.png"></link>
       </Head>
-      <Carousel cards={cards} />
-    </Box>
+      <Box overflow="hidden" maxWidth="50vw">
+        <Carousel cards={cards} />
+      </Box>
+    </Flex>
   );
 };
 
