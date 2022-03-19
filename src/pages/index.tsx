@@ -35,12 +35,12 @@ const cards: CardDetails[] = [
 
 const Home: NextPage = () => {
   return (
-    <Flex alignItems="center" justifyContent="center" >
+    <Flex alignItems="center" justifyContent="center">
       <Head>
         <title>Cartãozinho</title>
         <link rel="icon" type="image/png" href="/icon-front.png"></link>
       </Head>
-      <Box overflow="hidden" maxWidth="50vw">
+      <Box m={2} overflow="hidden" minWidth="75vw">
         <Carousel cards={cards} />
       </Box>
     </Flex>

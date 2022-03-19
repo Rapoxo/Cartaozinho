@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Box, SlideFade, Text, Flex } from "@chakra-ui/react";
+import { Box, SlideFade, Text, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { CardDetails } from "../types";
@@ -44,6 +44,14 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
 
   const [hiddenDots, setHiddenDots] = useState(false);
 
+  const variant = useBreakpointValue({
+    base: "none",
+    sm: "none",
+    md: "block",
+    lg: "block",
+    xl: "block",
+  });
+
   const paginate = (newDirection: number) => {
     console.log(newDirection);
     if (newDirection === 1 && isDisabledRight) return;
@@ -80,6 +88,7 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
     <Flex overflow="hidden" direction={"column"}>
       <Box style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
         <ChevronLeftIcon
+          display={variant}
           onClick={() => {
             paginate(-1);
           }}
@@ -121,6 +130,7 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
           </AnimatePresence>
         </Box>
         <ChevronRightIcon
+        display={variant}
           onClick={() => {
             paginate(1);
           }}
