@@ -53,7 +53,6 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
   });
 
   const paginate = (newDirection: number) => {
-    console.log(newDirection);
     if (newDirection === 1 && isDisabledRight) return;
     if (newDirection === -1 && isDisabledLeft) return;
     if (page + newDirection > cards.length - 1) return;
@@ -71,7 +70,6 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
   };
 
   useEffect(() => {
-    console.log(page);
     if (page === cards.length - 1) {
       setDisabledRight(true);
     } else {
@@ -130,7 +128,7 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
           </AnimatePresence>
         </Box>
         <ChevronRightIcon
-        display={variant}
+          display={variant}
           onClick={() => {
             paginate(1);
           }}

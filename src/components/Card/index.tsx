@@ -1,6 +1,5 @@
-import { Box, Tooltip, Text, SimpleGrid, useMediaQuery } from "@chakra-ui/react";
+import { Box, Text, SimpleGrid, useMediaQuery } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import { useEffect } from "react";
 
 const getShadeColor = (color: string) => {
   const rgb = [color.substring(1, 3), color.substring(3, 5), color.substring(5, 7)];
@@ -19,10 +18,7 @@ type CardDetails = {
 
 const Card: NextPage<CardDetails> = ({ textColor, secondaryTextColor, backgroundColor, cardHolder, finalNumbers, expiration, cardBrand }) => {
   const [isMobile] = useMediaQuery("(max-width: 480px)");
-  const [isLongBoi] = useMediaQuery("(max-width: 600px)")
-  useEffect(() => {
-    console.log(isMobile);
-  }, [isMobile]);
+  const [isLongBoi] = useMediaQuery("(max-width: 600px)");
 
   return (
     <Box
@@ -30,7 +26,6 @@ const Card: NextPage<CardDetails> = ({ textColor, secondaryTextColor, background
       color="#e0dede"
       w={isMobile ? "90vw" : "400px"}
       h={isMobile && !isLongBoi ? "30vh" : "200px"}
-      
       textColor={textColor ? textColor : "white"}
       cursor={"grab"}
       userSelect={"none"}
