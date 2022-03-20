@@ -24,7 +24,7 @@ const Card: NextPage<CardDetails> = ({ textColor, secondaryTextColor, background
       _hover={{ transform: "scale(1.05)", transition: "transform 250ms ease" }}
       bgGradient={`linear(to-b,${backgroundColor.toUpperCase()} , ${getShadeColor(backgroundColor.toUpperCase())} )`}
     >
-      <SimpleGrid m={3} templateRows="75px 50px 25px">
+      <SimpleGrid m={3} padding={2} templateRows="75px 50px 25px">
         <Box>
           <Text fontSize="3xl">{cardBrand}</Text>
         </Box>
