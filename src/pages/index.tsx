@@ -54,7 +54,6 @@ const Home: NextPage = () => {
 
   const changeHandler = (newCard: CardDetails) => {
     setCurrentCard(newCard);
-    console.log(currentCard);
   };
 
   const monthAmount = () => {
