@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { Icon } from "@chakra-ui/react";
 import styles from "./style.module.css";
+
 type CircleProps = {
   isActive: boolean;
   onClick: () => void;

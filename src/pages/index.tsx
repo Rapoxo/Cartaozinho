@@ -8,10 +8,11 @@ const cards: CardDetails[] = [
   {
     textColor: "#e0dede",
     backgroundColor: "#8834ea",
-    cardHolder: "fernando silva de arruda ",
+    cardHolder: "fernando s arruda ",
     finalNumbers: "8923",
     expiration: "03/30",
     cardBrand: "Nubank",
+    totalAmount: 300,
   },
   {
     textColor: "#e0dede",
@@ -20,6 +21,7 @@ const cards: CardDetails[] = [
     finalNumbers: "2138",
     expiration: "03/30",
     cardBrand: "Extra",
+    totalAmount: 250,
   },
   {
     textColor: "#e0dede",
@@ -29,7 +31,17 @@ const cards: CardDetails[] = [
     finalNumbers: "8301",
     expiration: "03/30",
     cardBrand: "Pic-Pay",
+    totalAmount: 100,
   },
+  {
+    textColor: "#fff",
+    backgroundColor: "#f27400",
+    cardHolder: "fernando s arruda ",
+    finalNumbers: "8301",
+    expiration: "03/30",
+    cardBrand: "Inter",
+    totalAmount: 100000,
+  }
 ];
 
 const Home: NextPage = () => {
@@ -37,7 +49,6 @@ const Home: NextPage = () => {
     <Flex alignItems="center" justifyContent="center">
       <Head>
         <title>Cartãozinho</title>
-        <link rel="icon" type="image/png" href="/icon-front.png"></link>
       </Head>
       <Box m={2} overflow="hidden" minWidth="75vw">
         <Carousel cards={cards} />

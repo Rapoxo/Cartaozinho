@@ -6,4 +6,5 @@ export type CardDetails = {
   finalNumbers: string;
   expiration: string;
   cardBrand: string;
+  totalAmount: number;
 };

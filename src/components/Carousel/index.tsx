@@ -41,7 +41,6 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
   const [isDisabledLeft, setDisabledLeft] = useState(true);
   const [isDisabledRight, setDisabledRight] = useState(false);
   const [[page, direction], setPage] = useState([0, 0]);
-
   const [hiddenDots, setHiddenDots] = useState(false);
 
   const variant = useBreakpointValue({
@@ -157,7 +156,9 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
       </SlideFade>
       <SlideFade in={hiddenDots} offsetY="20px">
         <Box display={"flex"} style={{ justifyContent: "center", alignContent: "center" }}>
-          <Text fontSize="3xl">Total: R$ 2,00</Text>
+          <Text className="text" fontSize="3xl">
+            Total: R$ {cards[page].totalAmount.toFixed(2)}
+          </Text>
         </Box>
       </SlideFade>
     </Flex>
