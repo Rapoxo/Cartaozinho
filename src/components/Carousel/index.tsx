@@ -9,6 +9,7 @@ import Card from "../Card";
 
 type CarouselProps = {
   cards: CardDetails[];
+  changeHandler: (newCard: CardDetails) => void;
 };
 
 const variants = {
@@ -37,7 +38,7 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-const Carousel: NextPage<CarouselProps> = ({ cards }) => {
+const Carousel: NextPage<CarouselProps> = ({ cards, changeHandler }) => {
   const [isDisabledLeft, setDisabledLeft] = useState(true);
   const [isDisabledRight, setDisabledRight] = useState(false);
   const [[page, direction], setPage] = useState([0, 0]);
@@ -84,7 +85,8 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
     } else {
       setDisabledLeft(false);
     }
-  }, [page, cards]);
+    changeHandler(cards[page]);
+  }, [page, cards, changeHandler]);
 
   return (
     <Flex overflow="hidden" direction={"column"}>

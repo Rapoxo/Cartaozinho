@@ -1,8 +1,9 @@
 import type { NextPage } from "next";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import Carousel from "../components/Carousel";
 import Head from "next/head";
 import type { CardDetails } from "../components/types";
+import { useState } from "react";
 
 const cards: CardDetails[] = [
   {
@@ -40,19 +41,41 @@ const cards: CardDetails[] = [
     finalNumbers: "8301",
     expiration: "03/30",
     cardBrand: "Inter",
-    totalAmount: 100000,
-  }
+    totalAmount: 50,
+  },
 ];
 
 const Home: NextPage = () => {
+  const [currentCard, setCurrentCard] = useState({});
+  const currencyFormatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+
+  const changeHandler = (newCard: CardDetails) => {
+    setCurrentCard(newCard);
+    console.log(currentCard);
+  };
+
+  const monthAmount = () => {
+    let cardsAmount: number[] = [];
+    cards.forEach(card => {
+      cardsAmount.push(card.totalAmount);
+    });
+    return cardsAmount.reduce((a, b) => a + b);
+  };
+
   return (
     <Flex alignItems="center" justifyContent="center">
       <Head>
         <title>Cartãozinho</title>
       </Head>
-      <Box m={2} overflow="hidden" minWidth="75vw">
-        <Carousel cards={cards} />
-      </Box>
+      <Flex style={{ justifyContent: "center", alignItems: "center" }} flexDirection="column">
+        <Text fontSize="3xl">Total do mês: {currencyFormatter.format(monthAmount())} </Text>
+        <Box m={2} overflow="hidden" minWidth="75vw">
+          <Carousel cards={cards} changeHandler={changeHandler} />
+        </Box>
+      </Flex>
     </Flex>
   );
 };
