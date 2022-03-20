@@ -68,6 +68,11 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
     setHiddenDots(!hiddenDots);
   };
 
+  const currencyFormatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+
   useEffect(() => {
     if (page === cards.length - 1) {
       setDisabledRight(true);
@@ -157,7 +162,7 @@ const Carousel: NextPage<CarouselProps> = ({ cards }) => {
       <SlideFade in={hiddenDots} offsetY="20px">
         <Box display={"flex"} style={{ justifyContent: "center", alignContent: "center" }}>
           <Text className="text" fontSize="3xl">
-            Total: R$ {cards[page].totalAmount.toFixed(2)}
+            Total: {currencyFormatter.format(cards[page].totalAmount)}
           </Text>
         </Box>
       </SlideFade>
