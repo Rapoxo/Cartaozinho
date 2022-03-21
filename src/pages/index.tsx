@@ -1,9 +1,10 @@
+import { Box, Flex, Text, Button, useColorMode, Heading } from "@chakra-ui/react";
+import { SunIcon, MoonIcon } from "@chakra-ui/icons";
 import type { NextPage } from "next";
-import { Box, Flex, Text } from "@chakra-ui/react";
-import Carousel from "../components/Carousel";
-import Head from "next/head";
 import type { CardDetails } from "../components/types";
 import { useState } from "react";
+import Carousel from "../components/Carousel";
+import Head from "next/head";
 
 const cards: CardDetails[] = [
   {
@@ -46,6 +47,7 @@ const cards: CardDetails[] = [
 ];
 
 const Home: NextPage = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
   const [currentCard, setCurrentCard] = useState({});
   const currencyFormatter = new Intl.NumberFormat("pt-BR", {
     style: "currency",
@@ -70,10 +72,14 @@ const Home: NextPage = () => {
         <title>Cartãozinho</title>
       </Head>
       <Flex style={{ justifyContent: "center", alignItems: "center" }} flexDirection="column">
-        <Text fontSize="3xl">Total do mês: {currencyFormatter.format(monthAmount())} </Text>
+        <Heading>
+          <Text fontSize="3xl">Total do mês: {currencyFormatter.format(monthAmount())} </Text>
+        </Heading>
+
         <Box m={2} overflow="hidden" minWidth="75vw">
           <Carousel cards={cards} changeHandler={changeHandler} />
         </Box>
+        <Button onClick={toggleColorMode}> {colorMode === "light" ? <MoonIcon /> : <SunIcon />}</Button>
       </Flex>
     </Flex>
   );

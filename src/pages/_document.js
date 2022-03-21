@@ -1,4 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import { ColorModeScript } from "@chakra-ui/react";
+import theme from "./theme";
 
 class MyDocument extends Document {
   render() {
@@ -9,6 +11,7 @@ class MyDocument extends Document {
           <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet"></link>
         </Head>
         <body>
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <Main />
           <NextScript />
         </body>
