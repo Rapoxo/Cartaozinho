@@ -1,4 +1,6 @@
-import { Box, Text, SimpleGrid, useMediaQuery } from "@chakra-ui/react";
+import { Box, Text, SimpleGrid, useMediaQuery, Flex } from "@chakra-ui/react";
+import { Icon } from "@chakra-ui/icons";
+import { BsPlusCircle } from "react-icons/bs";
 import type { NextPage } from "next";
 import type { CardDetails } from "../types";
 const getShadeColor = (color: string) => {
@@ -6,9 +8,33 @@ const getShadeColor = (color: string) => {
   return `rgb(${rgb.map(c => parseInt(c, 16) * 0.7).join()})`;
 };
 
-const Card: NextPage<CardDetails> = ({ textColor, secondaryTextColor, backgroundColor, cardHolder, finalNumbers, expiration, cardBrand, totalAmount }) => {
+const Card: NextPage<CardDetails> = ({ textColor, secondaryTextColor, backgroundColor, cardHolder, finalNumbers, expiration, cardBrand, totalAmount, template }) => {
   const [isMobile] = useMediaQuery("(max-width: 480px)");
   const [isLongBoi] = useMediaQuery("(max-width: 600px)");
+
+  if (template) {
+    return (
+      <Flex
+        className="interactive"
+        rounded="md"
+        color="#e0dede"
+        w={isMobile ? "90vw" : "400px"}
+        h={isMobile && !isLongBoi ? "30vh" : "200px"}
+        textColor={textColor ? textColor : "white"}
+        cursor={"pointer"}
+        userSelect={"none"}
+        transition={"transform 250ms ease"}
+        _hover={{ transform: "scale(1.05)", transition: "transform 250ms ease" }}
+        borderColor="#c2cad5"
+        bg="transparent"
+        borderWidth="thick"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Icon as={BsPlusCircle} h={16} w={16} color="#c2cad5" />
+      </Flex>
+    );
+  }
 
   return (
     <Box

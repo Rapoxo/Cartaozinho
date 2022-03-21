@@ -128,7 +128,7 @@ const Carousel: NextPage<CarouselProps> = ({ cards, changeHandler }) => {
                   }
                 }}
               >
-                <Card {...cards[page]} />
+                <Card {...cards[page]} template />
               </motion.div>
             }
           </AnimatePresence>

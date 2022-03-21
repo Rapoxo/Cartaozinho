@@ -1,4 +1,5 @@
 export type CardDetails = {
+  template?: boolean
   textColor?: string;
   secondaryTextColor?: string;
   backgroundColor: string;
