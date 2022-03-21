@@ -6,6 +6,7 @@ import type { CardDetails } from "../types";
 import type { NextPage } from "next";
 import Circle from "../Circle";
 import Card from "../Card";
+import CardTemplate from "../CardTemplate";
 
 type CarouselProps = {
   cards: CardDetails[];
@@ -55,9 +56,11 @@ const Carousel: NextPage<CarouselProps> = ({ cards, changeHandler }) => {
   const paginate = (newDirection: number) => {
     if (newDirection === 1 && isDisabledRight) return;
     if (newDirection === -1 && isDisabledLeft) return;
-    if (page + newDirection > cards.length - 1) return;
+    if (page + newDirection > cards.length) return;
     setPage([page + newDirection, newDirection]);
   };
+
+  const showModal = () => {};
 
   const specificPage = (page: number, newDirection: number) => {
     if (newDirection === 1 && isDisabledRight) return;
@@ -75,7 +78,8 @@ const Carousel: NextPage<CarouselProps> = ({ cards, changeHandler }) => {
   });
 
   useEffect(() => {
-    if (page === cards.length - 1) {
+    if (page === cards.length) {
+      setHiddenDots(true);
       setDisabledRight(true);
     } else {
       setDisabledRight(false);
@@ -101,11 +105,11 @@ const Carousel: NextPage<CarouselProps> = ({ cards, changeHandler }) => {
           h={8}
           color={isDisabledLeft ? "GrayText" : "black"}
         />
-        <Box as="span" m={8} p={0} onClick={showDetails}>
+        <Box as="span" m={8} p={0} onClick={page === cards.length ? showModal : showDetails}>
           <AnimatePresence exitBeforeEnter initial={false} custom={direction}>
             {
               <motion.div
-                key={cards[page].cardBrand}
+                key={page === cards.length ? "template" : cards[page].cardBrand}
                 custom={direction}
                 variants={variants}
                 initial="enter"
@@ -128,7 +132,7 @@ const Carousel: NextPage<CarouselProps> = ({ cards, changeHandler }) => {
                   }
                 }}
               >
-                <Card {...cards[page]} template />
+                {page === cards.length ? <CardTemplate /> : <Card {...cards[page]} />}
               </motion.div>
             }
           </AnimatePresence>
@@ -163,9 +167,15 @@ const Carousel: NextPage<CarouselProps> = ({ cards, changeHandler }) => {
       </SlideFade>
       <SlideFade in={hiddenDots} offsetY="20px">
         <Box display={"flex"} style={{ justifyContent: "center", alignContent: "center" }}>
-          <Text className="text" fontSize="3xl">
-            Total: {currencyFormatter.format(cards[page].totalAmount)}
-          </Text>
+          {page === cards.length ? (
+            <Text className="text" fontSize="3xl">
+              Adicionar cartão
+            </Text>
+          ) : (
+            <Text className="text" fontSize="3xl">
+              Total: {currencyFormatter.format(cards[page].totalAmount)}{" "}
+            </Text>
+          )}
         </Box>
       </SlideFade>
     </Flex>
